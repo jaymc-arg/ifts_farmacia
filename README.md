@@ -1,11 +1,11 @@
 # ifts_farmacia
 farmacia segundo parcial ifts24
 ## set up
-1- git clone https://github.com/jaymc-arg/ifts_farmacia.git
-2- cd ifts_farmacia
-3- pip install -r requirements.txt
-4- cd farmacia
-5- python3 main.py
+- git clone https://github.com/jaymc-arg/ifts_farmacia.git
+- cd ifts_farmacia
+- pip install -r requirements.txt
+- cd farmacia
+- python3 main.py
 
 ## config
 - usuarios:

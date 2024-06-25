@@ -11,25 +11,25 @@ def main():
             
             if not username or not password:
                 
-                username = input("Ingrese su nombre de usuario")
+                username = input("Ingrese su nombre de usuario: ")
+                print('\n')
                     
-                password = input("Ingrese su contraseña")
+                password = input("Ingrese su contraseña: ")
+                print('\n')
                 
                 if auth.login(username, password):
-                    print("Access granted.")
+                    pass
                 else:
                     username = None
                     password = None
-
+                    
         while username =='recepcion':
             try:
-                print(' 1) atencion\n 2) salir')
+                print(' 1) Atencion\n 2) Salir \n')
                 
                 event = input('¿A qué puesto quiere derivar a la persona? ')
                 
-                # print(event != '1')
                 if event not in ('1', '2'):
-                    # print('>>>>>>>>>>>',event)
                     raise ValueError('Debe ingresar opcion 1 o 2 \n')
                 
                 if event == '1':
@@ -39,7 +39,7 @@ def main():
                 if event == '2':
                     
                     username, password = auth.logout(username, password)
-                    print('\n Nos vemos pronto')
+                    print('\n Nos vemos pronto! \n')
                     break
                 
             except ValueError as e:
@@ -48,54 +48,54 @@ def main():
         while username == 'atencion':
             try: 
                 event = input(
-                    """
-                    ¿Que desea realizar? \n
-                    1) Lamar al siguiente \n
-                    2) Ver toda la fila \n
-                    3) Salir \n
-                    """
+                    """¿Que desea realizar? \n 1) Lamar al siguiente \n 2) Ver toda la fila \n 3) Salir \n """
                 )
                 if event not in ('1', '2', '3'):
                     # print('>>>>>>>>>>>',event)
-                    raise ValueError('Debe ingresar opcion 1, 2, 3, 4 \n')
+                    raise ValueError('\nDebe ingresar opcion 1, 2 o 3 \n')
                 
                 if event == '1':
                     next = auth.get_one(username)
-                    id_next = next[0]
-                    auth.attend_one(username, id_next)
-                    
-                    
-                    
-                    # >>>>>>> control
-                    line = auth.get_all_posta(username)
-                    print(line)
-                    print(id_next)
-                    # >>>>>>>>>>>>
-                    
-                    try:
-                        desicion = input( 
-                        """
-                        ¿Que desea realizar? \n
-                        1) Cobrar \n
-                        2) Finalizar atencion \n
-                        """)
-                        if desicion not in ('1', '2'):
-                            raise ValueError('Debe ingresar opcion 1, 2 \n')
-                        
-                        if desicion == '1':
-                            # TODO = validar stock en 0
-                            print(">>>>>>>>>>>COBRANDO")
-                            
-                            auth.finish_one(username, id_next)
-                            
-                            auth.auth_sale(username)                            
-                        
-                        if desicion == '2':
-                            auth.finish_one(username, id_next)
-                            
-                    except ValueError as e:
-                        print(e)
+                    # Valido que haya alguien en la fila
+                    if next:
+                        id_next = next[0]
+                        auth.attend_one(username, id_next)
 
+                        # >>>>>>> control
+                        line = auth.get_all_posta(username)
+                        print(line)
+                        print(id_next)
+                        # >>>>>>>>>>>>
+                        
+                        try:
+                            desicion = input( 
+                            """
+                            ¿Que desea realizar? \n
+                            1) Cobrar \n
+                            2) Finalizar atencion \n
+                            """)
+                            if desicion not in ('1', '2'):
+                                raise ValueError('Debe ingresar opcion 1, 2 \n')
+                            
+                            if desicion == '1':
+                                # TODO = validar stock en 0
+                                print(">>>>>>>>>>>COBRANDO")
+                                
+                                auth.finish_one(username, id_next)
+                                
+                                if auth.auth_sale(username):
+                                    #PRINT RECIPIT
+                                    print("reciboooooooo")
+                                else:
+                                    print("No tenemos mas productos en Stock.")
+                            
+                            if desicion == '2':
+                                auth.finish_one(username, id_next)
+                                
+                        except ValueError as e:
+                            print(e)
+                    else:
+                        print('\nLa fila esta vacia.')
                                     
                 if event == '2':
                     line = auth.get_all(username)

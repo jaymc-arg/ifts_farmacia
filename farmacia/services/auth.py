@@ -12,48 +12,50 @@ class UserAuth:
     def login(self, username, password):
         
         stored_password = self.db.get_user(username)
-        print(">>>>>>>>>>", stored_password)
+        
         if stored_password and stored_password[0] == password:
             
-            print("Login successful.")
+            print("Acceso autorizado. \n")
             return True
         else:
             
-            print("Invalid username or password.")
+            print("Aceso denegado. \nDebe ingresar un usuario y contraseña válidos.")
+            print('\n')
             return False
 
 
     def insert_fila_data(self, username, station):
         
         if username in ("recepcion") :
-            self.db.insert_event(station)
-            print(f"Data '{station}' inserted into fila table.")
+            number = self.db.insert_event(station)
+            print("Atencion insertada correctamente. \n")
+            
+            print(f"Tu numero en la fila es el {number} \n")
         else:
-            print("Permission denied. Only 'recepcion' can insert data.")
+            print("No authorizado.")
     
     
     def get_all(self, username):
-        
         if username in ('atencion', 'caja'):
             cursor = self.db.get_events(username)
             return cursor
-            
         else:
             print("No authorizado.")
             
             
-    # DEBUGUER  
+    # >>>>>>>>>>>>>>>>>> DEBUGUER  >>>>>>>>>>>>>>>>>>>>>>>
+    
     def get_all_posta(self, username):
-        
         if username in ('atencion'):
             cursor = self.db.get_every_event(username)
             return cursor
-            
         else:
             print("No authorizado.")
+            
+    # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+    
     
     def get_one(self, username):
-        
         if username in ('atencion'):
             cursor = self.db.get_last_event(username)
             return cursor
@@ -62,7 +64,6 @@ class UserAuth:
     
     
     def attend_one(self, username, id):
-        
         if username in ('atencion'):
             self.db.attend_event(id)
             # cursor = self.db.get_events(username)
@@ -71,7 +72,6 @@ class UserAuth:
             print("No authorizado.")
             
     def finish_one(self, username, id):
-        
         if username in ('atencion'):
             self.db.finish_event(id)
             cursor = self.db.get_events(username)
@@ -81,15 +81,22 @@ class UserAuth:
             
     def auth_sale(self, username):
         if username in ('atencion'):
-            cursor = self.db.sale_product()
-            print(cursor)
+            stock = self.db.get_stock()
+            print(stock)
+            if stock == 0:
+                return False
+            else:
+                self.db.sale_product()
+                return True
         else:
             print("No authorizado.")
             
     def show_report (self, username):
         if username in ('reportes'):
             
-            finished, not_finished = self.db.get_report()
+            local_now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+
+            finished, not_finished = self.db.get_report(local_now)
             
             finished = convert_tuple_list(finished)
             not_finished = convert_tuple_list(not_finished)

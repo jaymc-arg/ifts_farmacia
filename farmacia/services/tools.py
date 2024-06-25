@@ -23,13 +23,11 @@ def create_receipt(number_in_line):
     border = '+' + '-' * (receipt_width - 2) + '+'
     space = ' ' * (receipt_width - 2)
 
-    # Define the receipt lines
     header = '|{:^{width}}|'.format('RECIBO', width=receipt_width-2)
     line1 = '|{:^{width}}|'.format(f'Número: {number_in_line}', width=receipt_width-2)
     line2 = '|{:^{width}}|'.format(f'Producto vendido: Remedio', width=receipt_width-2)
     footer = '|{:^{width}}|'.format('Gracias por su compra!', width=receipt_width-2)
 
-    # Combine lines into the receipt
     receipt_lines = [
         border,
         header,
@@ -41,7 +39,32 @@ def create_receipt(number_in_line):
         border
     ]
 
-    # Join lines into a single string
     receipt = '\n'.join(receipt_lines)
 
     return receipt
+
+def create_call_sign(number_in_line):
+    sign_width = 40
+    border = '+' + '-' * (sign_width - 2) + '+'
+    space = ' ' * (sign_width - 2)
+    
+    header = '|{:^{width}}|'.format('PRÓXIMO EN LA FILA', width=sign_width-2)
+    line1 = '|{:^{width}}|'.format('POR FAVOR ACÉRQUESE AL MOSTRADOR.', width=sign_width-2)
+    line2 = '|{:^{width}}|'.format(f'NÚMERO: {number_in_line}', width=sign_width-2)
+    footer = '|{:^{width}}|'.format('GRACIAS!', width=sign_width-2)
+    
+    sign_lines = [
+        border,
+        header,
+        border,
+        line1,
+        border,
+        line2,
+        border,
+        footer,
+        border
+    ]
+    
+    sign = '\n'.join(sign_lines)
+    
+    return sign

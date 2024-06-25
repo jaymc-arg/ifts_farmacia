@@ -37,7 +37,7 @@ class Database:
                 cursor.execute("SELECT COUNT(*) FROM productos")
                 products_count = cursor.fetchone()[0]
 
-                print(users_count, products_count)
+                # print(users_count, products_count)
                 if users_count == 0 and products_count == 0:
                     conn.executescript(
                         "INSERT INTO users (username, password) VALUES ('admin', 'admin'); \
@@ -59,23 +59,23 @@ class Database:
         # print('>>>>>>>>>', username)
         with self.connection as conn:
             cursor = conn.execute(
-                "SELECT password FROM users WHERE username = ?", (username, )
+                "SELECT password FROM users WHERE username = ?", (username, ) # devuelve la password del usuario
             )
 
-            return cursor.fetchone()
+            return cursor.fetchone() # devuelve una tupla y adentro la pass
 
-    def insert_event(self, station):
+    def insert_event(self, station): # recibe nombre de fila al que insertar a la persona
         with self.connection as conn:
             conn.execute(
-                "INSERT INTO filas (station) VALUES (?)",
+                "INSERT INTO filas (station) VALUES (?)",  # inserta persona
                 (station,)
             )
 
             cursor = conn.execute(
-                "SELECT * FROM filas ORDER BY created_at DESC"
+                "SELECT * FROM filas ORDER BY created_at DESC" # busca a la persona recien insertada
             ).fetchone()
             
-            return cursor[0]
+            return cursor[0] # devuelve el nro en la fila del recien insertado
     
     def get_events(self, station):
         with self.connection as conn :
@@ -138,18 +138,14 @@ class Database:
             
     def get_stock(self):
         with self.connection as conn :
-            cursor = conn.execute("SELECT cantidad FROM productos").fetchone()
-        return cursor[0]
+            cursor = conn.execute("SELECT cantidad FROM productos").fetchone() # busca el stock de remedios
+        return cursor[0] #saca el valor de stock de la tupla
             
     def sale_product(self):
-        
         with self.connection as conn :          
             conn.execute(
-                "UPDATE productos SET cantidad = cantidad - 1 WHERE nombre = 'remedio'",
+                "UPDATE productos SET cantidad = cantidad - 1 WHERE nombre = 'remedio'", # descuenta 1 del stock
             )
-    
-    
-            
             
     def get_report(self, local_now):
         with self.connection as conn :

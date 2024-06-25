@@ -1,7 +1,7 @@
 # ifts_farmacia
 Farmacia 3000: porque los 2000 quedaron viejos
 ## Descripción
-El siguiente programa fue creado para que los y las empleadas de la farmacia puedan ingresar las atenciones de los clientes y para trackear el tiempo de atención. El sistema permite haccer un seguimiento meticuloso de los tiempos de atención, garantizando la buena experiencia de las y los clientes
+El siguiente programa fue creado para que los y las empleadas de la farmacia puedan ingresar las atenciones de los clientes y para trackear el tiempo de atención. El sistema permite hacer un seguimiento meticuloso de los tiempos de atención, garantizando la buena experiencia de las y los clientes
 
 ## Detalles
 La farmacia cuenta con dos mostradores: uno de recepción y el otro de atención. Se espera que el cliente ingrese a la farmacia, se anuncie en la recepción y allí recibirá un número que lo posicionará en la fila. Luego, ese cliente será llamado al mostrador de atención a través de una pantalla en donde se indicará su número de fila. Al acceder al mostrador de atención, el cliente solicitará su remedio y, en caso de haber stock, se realizará el cobro desde el mismo mostrador. En caso de no haber stock se le pedirá al cliente que vuelva pronto. 
@@ -22,6 +22,8 @@ El usuario de reportes podrá:
 - ver reporte de atenciones finalizadas
 - ver reporte de atenciones sin finalizar
 - Cerrar sesión
+
+En caso de querer ingresar con un usuario inexistente, o en caso de indicar una contraseña incorrecta, el sistema devolverá error.
 
 ## set up
 - git clone https://github.com/jaymc-arg/ifts_farmacia.git

@@ -62,7 +62,7 @@ def main():
                     if next:
                         id_next = next[0]
                         auth.attend_one(username, id_next)
-
+                        
                         # >>>>>>> control
                         # line = auth.get_all_posta(username)
                         # print(line)
@@ -94,7 +94,9 @@ def main():
                         print('\nLa fila esta vacia.')
                                     
                 if event == '2':
-                    line = auth.get_all(username)
+                    waiting_line = auth.get_all(username)
+                    print(waiting_line)
+                    
                 if event == '3':
                     username, password = auth.logout(username, password)
                     print('\n Nos vemos pronto')
@@ -111,7 +113,6 @@ def main():
                 event = input('¿Qué acción desea realizar?')
                 
                 if event not in('1', '2'):
-                    # print('>>>>>>>>>>>',event)
                     raise ValueError('Debe ingresar opcion 1 o 2 \n')    
                 
                 if event == '1':

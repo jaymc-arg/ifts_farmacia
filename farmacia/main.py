@@ -71,27 +71,30 @@ def main():
                         # print(id_next)
                         # >>>>>>>>>>>>
                         
-                        try:
-                            desicion = input( 
-                            """\n¿Que desea realizar? \n1) Cobrar \n2) Finalizar atencion \n""")
-                            if desicion not in ('1', '2'):
-                                raise ValueError('Debe ingresar opcion 1, 2 \n')
-                            
-                            if desicion == '1': # decide cobrar
+                        desicion = None
+                        while not desicion:
+                            try:
+                                desicion = input( 
+                                """\n¿Que desea realizar? \n1) Cobrar \n2) Finalizar atencion \n""")
+                                if desicion not in ('1', '2'):
+                                    raise ValueError('Debe ingresar opcion 1, 2 \n')
                                 
-                                if auth.auth_sale(username): # valida que haya stock y devuelve True en caso positivo
-                                    recipit = create_receipt(id_next) # crea print del recibo de venta
-                                    print(recipit)
-                                else:
-                                    print("No tenemos mas productos en Stock.")
-                            
-                                auth.finish_one(username, id_next) # termina la atencion
+                                if desicion == '1': # decide cobrar
+                                    
+                                    if auth.auth_sale(username): # valida que haya stock y devuelve True en caso positivo
+                                        recipit = create_receipt(id_next) # crea print del recibo de venta
+                                        print(recipit)
+                                    else:
+                                        print("No tenemos mas productos en Stock.")
                                 
-                            if desicion == '2': # finaliza sin cobrar porque por alguna razon el cliente no compro
-                                auth.finish_one(username, id_next)
+                                    auth.finish_one(username, id_next) # termina la atencion
+                                    
+                                if desicion == '2': # finaliza sin cobrar porque por alguna razon el cliente no compro
+                                    auth.finish_one(username, id_next)
                                 
-                        except ValueError as e: # catch error de ingreso
-                            print(e)
+                            except ValueError as e: # catch error de ingreso
+                                print(e)
+                                desicion = None
                     else: # no hay nadie en la fila
                         print('\nLa fila esta vacia. \n')
                                     
@@ -121,7 +124,7 @@ def main():
                     finished_report, _ = auth.show_report(username)
                     print(finished_report)
                     
-                if event == '2':
+                if event == '2': # atenciones en curso
                     _, finished_report = auth.show_report(username)
                     print(finished_report)
 

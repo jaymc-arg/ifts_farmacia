@@ -1,5 +1,6 @@
 from services.auth import UserAuth
 from config.db import Database
+from services.tools import create_receipt
 
 def main():
     auth = UserAuth()
@@ -56,36 +57,31 @@ def main():
                 
                 if event == '1':
                     next = auth.get_one(username)
+                    
                     # Valido que haya alguien en la fila
                     if next:
                         id_next = next[0]
                         auth.attend_one(username, id_next)
 
                         # >>>>>>> control
-                        line = auth.get_all_posta(username)
-                        print(line)
-                        print(id_next)
+                        # line = auth.get_all_posta(username)
+                        # print(line)
+                        # print(id_next)
                         # >>>>>>>>>>>>
                         
                         try:
                             desicion = input( 
-                            """
-                            ¿Que desea realizar? \n
-                            1) Cobrar \n
-                            2) Finalizar atencion \n
-                            """)
+                            """¿Que desea realizar? \n1) Cobrar \n2) Finalizar atencion \n""")
                             if desicion not in ('1', '2'):
                                 raise ValueError('Debe ingresar opcion 1, 2 \n')
                             
                             if desicion == '1':
-                                # TODO = validar stock en 0
-                                print(">>>>>>>>>>>COBRANDO")
                                 
                                 auth.finish_one(username, id_next)
                                 
                                 if auth.auth_sale(username):
-                                    #PRINT RECIPIT
-                                    print("reciboooooooo")
+                                    recipit = create_receipt(id_next)
+                                    print(recipit)
                                 else:
                                     print("No tenemos mas productos en Stock.")
                             
@@ -99,9 +95,6 @@ def main():
                                     
                 if event == '2':
                     line = auth.get_all(username)
-                    
-                    print(line)
-                
                 if event == '3':
                     username, password = auth.logout(username, password)
                     print('\n Nos vemos pronto')
@@ -116,7 +109,6 @@ def main():
                 print(' 1) Ver reporte de atenciones finalizadas \n 2) Ver reporte de atenciones sin finalizar \n 3) Salir')
                 
                 event = input('¿Qué acción desea realizar?')
-                print(">>>>>>>>>", event)
                 
                 if event not in('1', '2'):
                     # print('>>>>>>>>>>>',event)

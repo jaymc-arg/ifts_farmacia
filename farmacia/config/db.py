@@ -139,7 +139,6 @@ class Database:
     def get_stock(self):
         with self.connection as conn :
             cursor = conn.execute("SELECT cantidad FROM productos").fetchone()
-            print(">>>>>>>>><<<<<", cursor[0])
         return cursor[0]
             
     def sale_product(self):

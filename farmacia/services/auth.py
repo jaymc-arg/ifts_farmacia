@@ -36,9 +36,12 @@ class UserAuth:
     
     
     def get_all(self, username):
-        if username in ('atencion', 'caja'):
+        if username in ('atencion'):
             cursor = self.db.get_events(username)
-            return cursor
+            cursor_shorted = [item[:3] for item in cursor]
+            headers = ['Número', 'Fila', 'Ingreso']
+            line = tabulate(cursor_shorted, headers=headers, tablefmt='pretty')  
+            return line
         else:
             print("No authorizado.")
             
@@ -66,23 +69,19 @@ class UserAuth:
     def attend_one(self, username, id):
         if username in ('atencion'):
             self.db.attend_event(id)
-            # cursor = self.db.get_events(username)
-            # print(cursor)
+
         else:
             print("No authorizado.")
             
     def finish_one(self, username, id):
         if username in ('atencion'):
             self.db.finish_event(id)
-            cursor = self.db.get_events(username)
-            print(cursor)
         else:
             print("No authorizado.")
             
     def auth_sale(self, username):
         if username in ('atencion'):
             stock = self.db.get_stock()
-            print(stock)
             if stock == 0:
                 return False
             else:
@@ -112,7 +111,6 @@ class UserAuth:
             return finished_report, not_finished_report
     
     def logout(self, username, password):
-        # hacer query a usuario para validar que existe
         return None, None
     
 # Example usage:

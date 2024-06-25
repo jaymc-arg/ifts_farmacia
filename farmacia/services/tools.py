@@ -68,3 +68,28 @@ def create_call_sign(number_in_line):
     sign = '\n'.join(sign_lines)
     
     return sign
+
+def create_ticket(number_in_line):
+    ticket_width = 30
+    border = '+' + '-' * (ticket_width - 2) + '+'
+    space = ' ' * (ticket_width - 2)
+
+    header = '|{:^{width}}|'.format('TICKET', width=ticket_width-2)
+    line1 = '|{:^{width}}|'.format('Tu numero en la fila es:', width=ticket_width-2)
+    line2 = '|{:^{width}}|'.format(f'{number_in_line}', width=ticket_width-2)
+    footer = '|{:^{width}}|'.format('Espere a ser llamado.', width=ticket_width-2)
+
+    ticket_lines = [
+        border,
+        header,
+        border,
+        line1,
+        line2,
+        border,
+        footer,
+        border
+    ]
+
+    ticket = '\n'.join(ticket_lines)
+
+    return ticket

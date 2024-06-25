@@ -31,7 +31,8 @@ class UserAuth:
             number = self.db.insert_event(station) # recibe fila en la que insertar persona y retorna numero de atencion de la persona
             print("Atencion insertada correctamente. \n")
             
-            print(f"Tu numero en la fila es el {number} \n") # imprime el numero en la fila de la persona
+            #print(f"Tu numero en la fila es el {number} \n") # imprime el numero en la fila de la persona
+            return number
         else:
             print("No authorizado.")
     

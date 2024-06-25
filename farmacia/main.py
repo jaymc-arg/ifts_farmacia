@@ -1,6 +1,6 @@
 from services.auth import UserAuth
 from config.db import Database
-from services.tools import create_receipt, create_call_sign
+from services.tools import create_receipt, create_call_sign, create_ticket
 
 def main():
     auth = UserAuth() # instancio objeto que autoriza cada accion de los usuarios
@@ -8,6 +8,7 @@ def main():
     password = None
     # Database.start_up()
     while True: 
+        print("Bienvenido a Farmacia 3000")
         while not username: # se ejecuta siempre que no haya alguien logueado
             
             if not username or not password: # si no hay nadie logueado continua
@@ -35,8 +36,9 @@ def main():
                 
                 if event == '1': # ingresar una persona en la fila 'atencion'
                     
-                    auth.insert_fila_data(username, 'atencion') # funcion que valida permiso para ingresar persona en fila
-                
+                    number_in_line = auth.insert_fila_data(username, 'atencion') # funcion que valida permiso para ingresar persona en fila
+                    ticket = create_ticket(number_in_line)
+                    print(ticket)
                 if event == '2': # logout
                     
                     username, password = auth.logout(username, password) # recibe usuario y contraseña y los setea a None para volver a linea 11
@@ -49,7 +51,7 @@ def main():
         while username == 'atencion':
             try: 
                 event = input(
-                    """¿Que desea realizar? \n 1) Lamar al siguiente \n 2) Ver toda la fila \n 3) Salir \n """
+                    """¿Que desea realizar? \n 1) Llamar al siguiente \n 2) Ver toda la fila \n 3) Salir \n """
                 )
                 if event not in ('1', '2', '3'):
                     raise ValueError('\nDebe ingresar opcion 1, 2 o 3 \n')
@@ -91,7 +93,7 @@ def main():
                         except ValueError as e: # catch error de ingreso
                             print(e)
                     else: # no hay nadie en la fila
-                        print('\nLa fila esta vacia.')
+                        print('\nLa fila esta vacia. \n')
                                     
                 if event == '2': # muestra a todos en la fila de atencion
                     waiting_line = auth.get_all(username) # busca todos en la fila que NO estan atendidos
@@ -112,8 +114,8 @@ def main():
                 
                 event = input('¿Qué acción desea realizar?')
                 
-                if event not in('1', '2'):
-                    raise ValueError('Debe ingresar opcion 1 o 2 \n')    
+                if event not in('1', '2', '3'):
+                    raise ValueError('Debe ingresar opcion 1, 2 o 3 \n')    
                 
                 if event == '1': # atenciones finalizadas
                     finished_report, _ = auth.show_report(username)
@@ -124,7 +126,6 @@ def main():
                     print(finished_report)
 
                 if event == '3':
-                    
                     username, password = auth.logout(username, password)
                     print('\n Nos vemos pronto')
                     break

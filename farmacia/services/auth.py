@@ -34,7 +34,7 @@ class UserAuth:
             #print(f"Tu numero en la fila es el {number} \n") # imprime el numero en la fila de la persona
             return number
         else:
-            print("No authorizado.")
+            print("No autorizado.")
     
     
     def get_all(self, username): 
@@ -45,7 +45,7 @@ class UserAuth:
             line = tabulate(cursor_shorted, headers=headers, tablefmt='pretty')  # genera tabla de fila de espera
             return line
         else:
-            print("No authorizado.")
+            print("No autorizado.")
             
             
     # >>>>>>>>>>>>>>>>>> DEBUGUER  >>>>>>>>>>>>>>>>>>>>>>>
@@ -55,7 +55,7 @@ class UserAuth:
             cursor = self.db.get_every_event(username)
             return cursor
         else:
-            print("No authorizado.")
+            print("No autorizado.")
             
     # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
     
@@ -65,7 +65,7 @@ class UserAuth:
             cursor = self.db.get_last_event(username)
             return cursor
         else:
-            print("No authorizado.")
+            print("No autorizado.")
     
     
     def attend_one(self, username, id):
@@ -73,13 +73,13 @@ class UserAuth:
             self.db.attend_event(id)
 
         else:
-            print("No authorizado.")
+            print("No autorizado.")
             
     def finish_one(self, username, id):
         if username in ('atencion'):
             self.db.finish_event(id)
         else:
-            print("No authorizado.")
+            print("No autorizado.")
             
     def auth_sale(self, username):
         if username in ('atencion'):
@@ -90,7 +90,7 @@ class UserAuth:
                 self.db.sale_product() # vende el producto
                 return True
         else:
-            print("No authorizado.")
+            print("No autorizado.")
             
     def show_report (self, username):
         if username in ('reportes'): # valida usuario reportes
